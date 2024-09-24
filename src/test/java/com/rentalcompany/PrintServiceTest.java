@@ -44,7 +44,6 @@ class PrintServiceTest {
         agreement.setDiscountAmount(1.20);
         agreement.setFinalCharge(10.76);
 
-        // Act
         printService.printRentalAgreement(agreement, tool);
 
         // Assert

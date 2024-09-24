@@ -1,9 +1,12 @@
 package com.rentalcompany.model;
 
 import lombok.Data;
+import lombok.Getter;
 
+@Getter
 @Data
 public class Tool {
+
     private String code;
     private String type;
     private String brand;
@@ -12,8 +15,6 @@ public class Tool {
     private boolean weekendCharge;
     private boolean holidayCharge;
 
-    // Constructor, getters, and setters
-    // ...
 
     public Tool(String code, String type, String brand, double dailyCharge, boolean weekdayCharge, boolean weekendCharge, boolean holidayCharge) {
         this.code = code;
@@ -25,12 +26,4 @@ public class Tool {
         this.holidayCharge = holidayCharge;
     }
 
-//    // Getters
-//    public String getCode() { return code; }
-//    public String getType() { return type; }
-//    public String getBrand() { return brand; }
-//    public double getDailyCharge() { return dailyCharge; }
-//    public boolean isWeekdayCharge() { return weekdayCharge; }
-//    public boolean isWeekendCharge() { return weekendCharge; }
-//    public boolean isHolidayCharge() { return holidayCharge; }
 }

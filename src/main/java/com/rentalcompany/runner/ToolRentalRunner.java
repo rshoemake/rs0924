@@ -2,7 +2,7 @@ package com.rentalcompany.runner;
 
 import com.rentalcompany.model.RentalAgreement;
 import com.rentalcompany.model.Tool;
-import com.rentalcompany.service.ChargeService;
+import com.rentalcompany.service.RentalPricingService;
 import com.rentalcompany.service.PrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 @Component
-@ComponentScan({"com.rentalcompany.service","com.rentalcompany.model"})
+@ComponentScan("com.rentalcompany")
 public class ToolRentalRunner implements CommandLineRunner {
 
     private final Map<String, Tool> tools = new HashMap<>();
@@ -25,7 +25,7 @@ public class ToolRentalRunner implements CommandLineRunner {
     PrintService printService;
 
     @Autowired
-    ChargeService chargeService;
+    RentalPricingService rentalPricingService;
 
     public ToolRentalRunner() {
         tools.put("CHNS", new Tool("CHNS", "Chainsaw", "Stihl", 1.49, true, true, false));
@@ -89,7 +89,7 @@ public class ToolRentalRunner implements CommandLineRunner {
 
             LocalDate checkoutDate = LocalDate.parse(checkoutDateStr, DateTimeFormatter.ofPattern("MM/dd/yy"));
             RentalAgreement agreement = new RentalAgreement(tool, rentalDayCount, discountPercent, checkoutDate);
-            chargeService.calculateCharges(agreement, tool);
+            rentalPricingService.calculateCharges(agreement, tool);
             printService.printRentalAgreement(agreement, tool);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
