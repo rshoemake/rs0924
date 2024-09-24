@@ -2,7 +2,7 @@ package com.rentalcompany;
 
 import com.rentalcompany.model.RentalAgreement;
 import com.rentalcompany.model.Tool;
-import com.rentalcompany.service.PrintService;
+import com.rentalcompany.service.PrintingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +17,11 @@ class PrintServiceTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    private PrintService printService;
+    private PrintingService printingService;
 
     @BeforeEach
     public void setUp() {
-        printService = new PrintService();
+        printingService = new PrintingService();
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
@@ -44,7 +44,7 @@ class PrintServiceTest {
         agreement.setDiscountAmount(1.20);
         agreement.setFinalCharge(10.76);
 
-        printService.printRentalAgreement(agreement, tool);
+        printingService.printRentalAgreement(agreement);
 
         // Assert
         String printedOutput = outputStreamCaptor.toString().trim();
@@ -76,8 +76,7 @@ class PrintServiceTest {
         agreement.setDiscountAmount(0.00);
         agreement.setFinalCharge(5.97);
 
-        // Act
-        printService.printRentalAgreement(agreement, tool);
+        printingService.printRentalAgreement(agreement);
 
         // Assert
         String printedOutput = outputStreamCaptor.toString().trim();
@@ -101,8 +100,7 @@ class PrintServiceTest {
         agreement.setDiscountAmount(11.18);
         agreement.setFinalCharge(33.52);
 
-        // Act
-        printService.printRentalAgreement(agreement, tool);
+        printingService.printRentalAgreement(agreement);
 
         // Assert
         String printedOutput = outputStreamCaptor.toString().trim();

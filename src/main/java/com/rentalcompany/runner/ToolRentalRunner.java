@@ -3,7 +3,7 @@ package com.rentalcompany.runner;
 import com.rentalcompany.model.RentalAgreement;
 import com.rentalcompany.model.Tool;
 import com.rentalcompany.service.RentalPricingService;
-import com.rentalcompany.service.PrintService;
+import com.rentalcompany.service.PrintingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,7 +22,7 @@ public class ToolRentalRunner implements CommandLineRunner {
     private final Map<String, Tool> tools = new HashMap<>();
 
     @Autowired
-    PrintService printService;
+    PrintingService printingService;
 
     @Autowired
     RentalPricingService rentalPricingService;
@@ -90,7 +90,7 @@ public class ToolRentalRunner implements CommandLineRunner {
             LocalDate checkoutDate = LocalDate.parse(checkoutDateStr, DateTimeFormatter.ofPattern("MM/dd/yy"));
             RentalAgreement agreement = new RentalAgreement(tool, rentalDayCount, discountPercent, checkoutDate);
             rentalPricingService.calculateCharges(agreement, tool);
-            printService.printRentalAgreement(agreement, tool);
+            printingService.printRentalAgreement(agreement);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
