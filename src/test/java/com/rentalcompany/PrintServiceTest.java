@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +32,7 @@ class PrintServiceTest {
     }
 
     @Test
-    void printAgreement_ShouldPrintCorrectInformation() {
+    void printAgreement_ShouldPrintCorrectInformation() throws ParseException {
         // Arrange
         Tool tool = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99, true, false, false);
         RentalAgreement agreement = new RentalAgreement();
@@ -43,6 +44,7 @@ class PrintServiceTest {
         agreement.setDiscountPercent(10);
         agreement.setDiscountAmount(1.20);
         agreement.setFinalCharge(10.76);
+        agreement.setTool(tool);
 
         printingService.printRentalAgreement(agreement);
 
@@ -63,7 +65,7 @@ class PrintServiceTest {
     }
 
     @Test
-    void printAgreement_ShouldHandleZeroDiscount() {
+    void printAgreement_ShouldHandleZeroDiscount() throws ParseException {
         // Arrange
         Tool tool = new Tool("LADW", "Ladder", "Werner", 1.99, true, true, false);
         RentalAgreement agreement = new RentalAgreement();
@@ -75,6 +77,7 @@ class PrintServiceTest {
         agreement.setDiscountPercent(0);
         agreement.setDiscountAmount(0.00);
         agreement.setFinalCharge(5.97);
+        agreement.setTool(tool);
 
         printingService.printRentalAgreement(agreement);
 
@@ -87,7 +90,7 @@ class PrintServiceTest {
     }
 
     @Test
-    void printAgreement_ShouldHandleLongRentalPeriod() {
+    void printAgreement_ShouldHandleLongRentalPeriod() throws ParseException {
         // Arrange
         Tool tool = new Tool("CHNS", "Chainsaw", "Stihl", 1.49, true, true, false);
         RentalAgreement agreement = new RentalAgreement();
@@ -99,12 +102,14 @@ class PrintServiceTest {
         agreement.setDiscountPercent(25);
         agreement.setDiscountAmount(11.18);
         agreement.setFinalCharge(33.52);
+        agreement.setTool(tool);
 
-        printingService.printRentalAgreement(agreement);
+        printingService.printRentalAgreement( agreement);
 
         // Assert
         String printedOutput = outputStreamCaptor.toString().trim();
         assertTrue(printedOutput.contains("Tool code: CHNS"));
+        System.out.println(printedOutput);
         assertTrue(printedOutput.contains("Rental days: 30"));
         assertTrue(printedOutput.contains("Check out date: 07/15/23"));
         assertTrue(printedOutput.contains("Due date: 08/14/23"));
